@@ -4,13 +4,14 @@ import { TagContainer } from './styles'
 interface TagProps {
   icon: ReactNode
   text: string
+  textAsWhite?: boolean
 }
 
-export function Tag({ icon, text }: TagProps) {
+export function Tag({ icon, text, textAsWhite = false }: TagProps) {
   return (
-    <TagContainer>
+    <TagContainer className={textAsWhite ? 'textAsWhite' : ''}>
       {icon}
-      {text}
+      <span>{text}</span>
     </TagContainer>
   )
 }

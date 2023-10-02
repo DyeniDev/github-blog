@@ -9,6 +9,7 @@ export const ButtonLinkContainer = styled.div`
     font-size: 0.75rem;
     cursor: pointer;
     text-decoration: none;
+    line-height: initial;
     border-bottom: 2px solid transparent;
     &:hover {
       border-color: ${(props) => props.theme.blue};

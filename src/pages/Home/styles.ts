@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const HomeContainer = styled.div`
   position: relative;
@@ -50,7 +51,8 @@ export const CartsContainer = styled.div`
   }
 `
 
-export const Card = styled.div`
+export const Card = styled(Link)`
+  text-decoration: none;
   border: 2px solid transparent;
   background: ${(props) => props.theme['base-post']};
   border-radius: 10px;
