@@ -1,7 +1,36 @@
+import { useEffect, useState } from 'react'
+import { api } from '../../lib/axios'
 import { InfoProfile } from './InfoProfile'
 import { Card, CartsContainer, HomeContainer, InputSearch } from './styles'
 
+interface PostProps {
+  title: string
+  created_at: string
+  body: string
+  number: number
+}
+
+interface GetPostResponse {
+  incomplete_results: boolean
+  total_count: number
+  items: PostProps[]
+}
+
 export function Home() {
+  const [posts, setPosts] = useState<PostProps[]>([])
+
+  async function getPosts(query: string = '') {
+    const response = await api.get<GetPostResponse>(
+      `/search/issues?q=${query}%20repo:kaikySantos/github-blog`,
+    )
+
+    setPosts(response.data.items)
+  }
+
+  useEffect(() => {
+    getPosts()
+  }, [])
+
   return (
     <HomeContainer>
       <InfoProfile />
@@ -15,118 +44,15 @@ export function Home() {
         <InputSearch placeholder="Buscar conteúdo" />
 
         <CartsContainer>
-          <Card to="/post/12345">
-            <header>
-              <h4>JavaScript data types and data structures</h4>
-              <span>Há 1 dia</span>
-            </header>
-            <p>
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn.
-            </p>
-          </Card>
-          <Card to="/post/12345">
-            <header>
-              <h4>JavaScript data types and data structures</h4>
-              <span>Há 1 dia</span>
-            </header>
-            <p>
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn.
-            </p>
-          </Card>
-          <Card to="/post/12345">
-            <header>
-              <h4>JavaScript data types and data structures</h4>
-              <span>Há 1 dia</span>
-            </header>
-            <p>
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn.
-            </p>
-          </Card>
-          <Card to="/post/12345">
-            <header>
-              <h4>JavaScript data types and data structures</h4>
-              <span>Há 1 dia</span>
-            </header>
-            <p>
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn.
-            </p>
-          </Card>
-          <Card to="/post/12345">
-            <header>
-              <h4>JavaScript data types and data structures</h4>
-              <span>Há 1 dia</span>
-            </header>
-            <p>
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn.
-            </p>
-          </Card>
-          <Card to="/post/12345">
-            <header>
-              <h4>JavaScript data types and data structures</h4>
-              <span>Há 1 dia</span>
-            </header>
-            <p>
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn.
-            </p>
-          </Card>
-          <Card to="/post/12345">
-            <header>
-              <h4>JavaScript data types and data structures</h4>
-              <span>Há 1 dia</span>
-            </header>
-            <p>
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn.
-            </p>
-          </Card>
-          <Card to="/post/12345">
-            <header>
-              <h4>JavaScript data types and data structures</h4>
-              <span>Há 1 dia</span>
-            </header>
-            <p>
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn.
-            </p>
-          </Card>
+        {posts.map((post) => (
+            <Card key={post.number} to={`/post/${post.number}`}>
+              <header>
+                <h4>{post.title}</h4>
+                <span>Há 1 dia</span>
+              </header>
+              <p>{post.body}</p>
+            </Card>
+          ))}
         </CartsContainer>
 
       </section>
