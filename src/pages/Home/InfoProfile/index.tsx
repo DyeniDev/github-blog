@@ -4,7 +4,6 @@ import {
   TagsContainer,
 } from './styles'
 
-import avatar from '../../../assets/avatar.png'
 import { Tag } from '../../../components/Tag'
 
 import {
@@ -14,32 +13,56 @@ import {
   FaExternalLinkAlt,
 } from 'react-icons/fa'
 import { ButtonLink } from '../../../components/ButtonLink'
+import { useEffect, useState } from 'react'
+import { api } from '../../../lib/axios'
+
+interface UserInfoProps {
+  avatar_url: string
+  html_url: string
+  name: string
+  bio: string
+  login: string
+  company: string
+  followers: number
+}
 
 export function InfoProfile() {
+  const [userInfo, setUserInfo] = useState<UserInfoProps>({} as UserInfoProps)
+
+  async function getUserInfo() {
+    const response = await api.get('/users/kaikySantos')
+
+    setUserInfo(response.data)
+  }
+
+  useEffect(() => {
+    getUserInfo()
+  }, [])
+
   return (
     <InfoProfileContainer>
-      <img src={avatar} alt="" />
+      <img src={userInfo.avatar_url} alt="" />
       <InfoProfileContent>
         <div>
         <div className="contentHeader">
-            <h3>Cameron Williamson</h3>
+          <h3>{userInfo.name}</h3>
             <ButtonLink
               iconRight={<FaExternalLinkAlt />}
               text="GITHUB"
               isExternalLink
-              link="https://github.com/DyeniDev"
+              link={userInfo.html_url}
             />
           </div>
-          <p>
-            Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-            viverra massa quam dignissim aenean malesuada suscipit. Nunc,
-            volutpat pulvinar vel mass.
-          </p>
+          <p>{userInfo.bio}</p>
         </div>
         <TagsContainer>
-          <Tag icon={<FaGithub />} text="cameronwll" textAsWhite />
-          <Tag icon={<FaBuilding />} text="Rocketseat" textAsWhite />
-          <Tag icon={<FaUserFriends />} text="32 seguidores" textAsWhite />
+          <Tag icon={<FaGithub />} text={userInfo.login} textAsWhite />
+          <Tag icon={<FaBuilding />} text={userInfo.company} textAsWhite />
+          <Tag
+            icon={<FaUserFriends />}
+            text={`${userInfo.followers} seguidores`}
+            textAsWhite
+          />
         </TagsContainer>
       </InfoProfileContent>
     </InfoProfileContainer>
