@@ -29,6 +29,12 @@ export const PostHeader = styled.div`
   .tagsContainer {
     display: flex;
     gap: 2rem;
+
+    @media (max-width: 530px) {
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
   }
 `
 
@@ -62,5 +68,9 @@ export const PostContent = styled.div`
         line-height: 160% !important;
       }
     }
+  }
+
+  @media (max-width: 530px) {
+    padding: 2.5rem 1rem;
   }
 `

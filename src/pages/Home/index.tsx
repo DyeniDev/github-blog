@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../../lib/axios'
+import { relativeDateFormatter } from '../../utils/formatter'
 import { InfoProfile } from './InfoProfile'
 import { Card, CartsContainer, HomeContainer, InputSearch } from './styles'
 
@@ -48,7 +49,7 @@ export function Home() {
             <Card key={post.number} to={`/post/${post.number}`}>
               <header>
                 <h4>{post.title}</h4>
-                <span>Há 1 dia</span>
+                <span>{relativeDateFormatter(post.created_at)}</span>
               </header>
               <p>{post.body}</p>
             </Card>

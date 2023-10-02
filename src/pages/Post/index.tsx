@@ -16,6 +16,7 @@ import { api } from '../../lib/axios'
 import { PostContainer, PostContent, PostHeader } from './styles'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import { relativeDateFormatter } from '../../utils/formatter'
 
 interface PostDetailsProps {
   title: string
@@ -76,16 +77,17 @@ export function Post() {
 
             <div className="tagsContainer">
               <Tag icon={<FaGithub />} text={post.user.login} />
-              <Tag icon={<FaCalendarDay />} text={post.created_at} />
+              <Tag
+                icon={<FaCalendarDay />}
+                text={relativeDateFormatter(post.created_at)}
+              />
               <Tag icon={<FaComment />} text={`${post.comments} comentarios`} />
             </div>
           </>
         )}
       </PostHeader>
       <PostContent>
-        {isLoading ? (
-          <Spinner />
-        ) : (
+        {!isLoading && (
           <ReactMarkdown
             children={post.body}
             components={{
