@@ -61,11 +61,10 @@ export function Home() {
     return () => clearTimeout(delayDebounceFn)
   }, [queryInput])
 
-
   return (
     <HomeContainer>
       <InfoProfile />
-      
+
       <section>
         <div>
           <h4>Publicações</h4>
@@ -103,7 +102,6 @@ export function Home() {
             ))}
           </CartsContainer>
         )}
-
       </section>
     </HomeContainer>
   )

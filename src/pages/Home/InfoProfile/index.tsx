@@ -32,7 +32,6 @@ export function InfoProfile() {
   const [isLoading, setIsLoading] = useState(true)
 
   async function getUserInfo() {
-    const response = await api.get('/users/DyeniDev')
     try {
       const response = await api.get('/users/DyeniDev')
 

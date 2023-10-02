@@ -38,7 +38,7 @@ export function Post() {
     async function getPost() {
       try {
         const response = await api.get<PostDetailsProps>(
-          `/repos/kaikySantos/github-blog/issues/${id}`,
+          `/repos/DyeniDev/github-blog/issues/${id}`,
         )
 
         setPost(response.data)
@@ -55,7 +55,7 @@ export function Post() {
   return (
     <PostContainer>
       <PostHeader>
-      {isLoading ? (
+        {isLoading ? (
           <Spinner />
         ) : (
           <>
@@ -91,15 +91,15 @@ export function Post() {
           <ReactMarkdown
             children={post.body}
             components={{
-              code({ node, inline, className, children, ...props }) {
+              code({ node, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || '')
-                return !inline && match ? (
+                return match ? (
                   <SyntaxHighlighter
                     children={String(children).replace(/\n$/, '')}
                     style={dracula as any}
                     language={match[1]}
                     PreTag="div"
-                    {...props}
+                    {...(props as SyntaxHighlighter)} 
                   />
                 ) : (
                   <code className={className} {...props}>
