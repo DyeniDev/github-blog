@@ -7,7 +7,13 @@ import {
 import avatar from '../../../assets/avatar.png'
 import { Tag } from '../../../components/Tag'
 
-import { FaGithub, FaBuilding, FaUserFriends } from 'react-icons/fa'
+import {
+  FaGithub,
+  FaBuilding,
+  FaUserFriends,
+  FaExternalLinkAlt,
+} from 'react-icons/fa'
+import { ButtonLink } from '../../../components/ButtonLink'
 
 export function InfoProfile() {
   return (
@@ -15,7 +21,10 @@ export function InfoProfile() {
       <img src={avatar} alt="" />
       <InfoProfileContent>
         <div>
-          <h3>Cameron Williamson</h3>
+        <div className="contentHeader">
+            <h3>Cameron Williamson</h3>
+            <ButtonLink iconRight={<FaExternalLinkAlt />} text="GITHUB" />
+          </div>
           <p>
             Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
             viverra massa quam dignissim aenean malesuada suscipit. Nunc,
