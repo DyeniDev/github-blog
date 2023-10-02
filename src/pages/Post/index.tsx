@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import { useEffect, useState } from 'react'
 import {
   FaAngleLeft,
@@ -6,17 +7,22 @@ import {
   FaExternalLinkAlt,
   FaGithub,
 } from 'react-icons/fa'
+import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router-dom'
 import { ButtonLink } from '../../components/ButtonLink'
+import { Spinner } from '../../components/Spinner'
 import { Tag } from '../../components/Tag'
 import { api } from '../../lib/axios'
-import { PostContainer, PostHeader } from './styles'
+import { PostContainer, PostContent, PostHeader } from './styles'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 interface PostDetailsProps {
   title: string
   html_url: string
   created_at: string
   comments: number
+  body: string
   user: {
     login: string
   }
@@ -49,7 +55,7 @@ export function Post() {
     <PostContainer>
       <PostHeader>
       {isLoading ? (
-          <h1>Carregando...</h1>
+          <Spinner />
         ) : (
           <>
             <header>
@@ -76,6 +82,33 @@ export function Post() {
           </>
         )}
       </PostHeader>
+      <PostContent>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <ReactMarkdown
+            children={post.body}
+            components={{
+              code({ node, inline, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || '')
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    children={String(children).replace(/\n$/, '')}
+                    style={dracula as any}
+                    language={match[1]}
+                    PreTag="div"
+                    {...props}
+                  />
+                ) : (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                )
+              },
+            }}
+          />
+        )}
+      </PostContent>
     </PostContainer>
   )
 }

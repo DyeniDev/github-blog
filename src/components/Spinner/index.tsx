@@ -3,6 +3,8 @@ import { SpinnerContainer } from './styles'
 
 export function Spinner() {
    return (
-    <SpinnerContainer></SpinnerContainer>
+    <SpinnerContainer>
+      <div className="loader"></div>
+    </SpinnerContainer>
    )
 }
