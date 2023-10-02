@@ -41,6 +41,16 @@ export const InputSearch = styled.input`
   }
 `
 
+export const NoContentContainer = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > div {
+    width: auto !important;
+  }
+`
+
 export const CartsContainer = styled.div`
   margin-top: 3rem;
   display: grid;
