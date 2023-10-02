@@ -19,13 +19,24 @@ interface GetPostResponse {
 
 export function Home() {
   const [posts, setPosts] = useState<PostProps[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   async function getPosts(query: string = '') {
-    const response = await api.get<GetPostResponse>(
-      `/search/issues?q=${query}%20repo:kaikySantos/github-blog`,
-    )
+    try {
+      const response = await api.get<GetPostResponse>(
+        `/search/issues?q=${query}%20repo:kaikySantos/github-blog`,
+      )
 
-    setPosts(response.data.items)
+      setPosts(response.data.items)
+    } catch (err) {
+      console.log('Error: ', err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  function formatterDescriptionCard(text: string) {
+    return text.replaceAll('#', '')
   }
 
   useEffect(() => {
@@ -39,7 +50,7 @@ export function Home() {
       <section>
         <div>
           <h4>Publicações</h4>
-          <p>6 publicações</p>
+          <p>{posts.length} publicações</p>
         </div>
 
         <InputSearch placeholder="Buscar conteúdo" />
@@ -51,7 +62,7 @@ export function Home() {
                 <h4>{post.title}</h4>
                 <span>{relativeDateFormatter(post.created_at)}</span>
               </header>
-              <p>{post.body}</p>
+              <p>{formatterDescriptionCard(post.body)}</p>
             </Card>
           ))}
         </CartsContainer>

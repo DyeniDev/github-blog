@@ -43,7 +43,7 @@ export function Post() {
 
         setPost(response.data)
       } catch (err) {
-        console.log('Error!')
+        console.log('Error: ', err)
       } finally {
         setIsLoading(false)
       }
