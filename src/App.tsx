@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import { Home } from './pages/Home'
 import { GlobalStyle } from './styles/global'
 import { defaultTheme } from './styles/theme/default'
+import { DefaultLayout } from './layout/Default'
 
 export function App() {
   return (
@@ -11,7 +12,9 @@ export function App() {
         <GlobalStyle />
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<DefaultLayout />}>
+            <Route path="/" element={<Home />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
